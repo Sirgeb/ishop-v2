@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  username      String
+  email         String         @unique
+  password      String
+  permissions   Permission[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  cartItems     CartItem[]
+  WishlistItems WishlistItem[]
+  OrderItems    OrderItem[]
+  Order         Order[]
+}
+
+model Item {
+  id              String         @id @default(cuid())
+  itemName        String
+  discountPercent Int
+  image1          String
+  image2          String
+  category        Category
+  amount          Int
+  newPrice        Int
+  description     String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  CartItems       CartItem[]
+  WishlistItems   WishlistItem[]
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  quantity  Int      @default(1)
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  itemName    String
+  image1      String
+  image2      String
+  newPrice    Int
+  description String
+  quantity    Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  Order       Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  items     OrderItem[]
+  total     Int
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  charge    String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+enum Category {
+  BAG
+  SHOE
+  SHIRT
+  WRISTWATCH
+  DEVICE
+}
+
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}

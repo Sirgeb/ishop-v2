@@ -6,6 +6,7 @@ import {
 	ApolloServerPluginLandingPageGraphQLPlayground
   } from "apollo-server-core";
 import { schema } from "./schema";
+import { createContext } from "./context";
 
 const IS_DEV = process.env.NODE_ENV === "development";
 const localOrigins = [/^http:\/\/localhost:\d{4}$/];
@@ -16,6 +17,7 @@ async function startApolloServer() {
 	const httpServer = http.createServer(app);
 	const server = new ApolloServer({
 		schema,
+		context: createContext,
 		introspection: true,
 		plugins: [
 			ApolloServerPluginDrainHttpServer({ httpServer }),

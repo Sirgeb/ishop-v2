@@ -1,11 +1,6 @@
-import { objectType } from "nexus";
-
-export const User = objectType({
-  name: "User",
-  definition(t) {
-    t.id("id");
-    t.string("username") 
-    t.string("email") 
-    t.string("password")
-  }
-})
+export * from './user';
+export * from './cart-item';
+export * from './item';
+export * from './order';
+export * from './order-item';
+export * from './wishlist-item';
