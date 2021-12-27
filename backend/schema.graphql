@@ -6,12 +6,83 @@ type AuthPayload {
   message: String!
 }
 
+type CartItem {
+  id: ID!
+  item: Item!
+  itemId: ID!
+  quantity: Int!
+  user: User!
+  userId: ID!
+}
+
+input CreateItemInput {
+  amount: Int!
+  category: category!
+  description: String!
+  discountPercent: Int!
+  image1: String!
+  image2: String!
+  itemName: String!
+  newPrice: Int!
+}
+
+type Item {
+  amount: Int!
+  cartItems: [CartItem!]!
+  category: category!
+  description: String!
+  discountPercent: String!
+  id: ID!
+  image1: String!
+  image2: String!
+  itemName: String!
+  newPrice: Int!
+  wishlistItems: [WishlistItem!]!
+}
+
+input ItemWhereUniqueInput {
+  id: ID!
+}
+
 type Mutation {
+  createItem(input: CreateItemInput!): Item!
+  deleteItem(where: ItemWhereUniqueInput!): Item!
+  signin(input: SigninInput!): AuthPayload!
   signup(input: SignupInput!): AuthPayload!
+  updateItem(input: UpdateItemInput!, where: ItemWhereUniqueInput!): Item
+}
+
+type Order {
+  charge: String!
+  id: ID!
+  total: Int!
+  user: User!
+  userId: ID!
+}
+
+type OrderItem {
+  description: String!
+  id: ID!
+  image1: String!
+  image2: String!
+  itemName: String!
+  newPrice: Int!
+  orderId: ID!
+  quantity: Int!
+  user: User!
+  userId: ID!
 }
 
 type Query {
-  ok: Boolean!
+  getUser(where: UserWhereUniqueInput!): User
+  getUsers: [User!]!
+  item(where: ItemWhereUniqueInput!): Item
+  items: [Item!]!
+}
+
+input SigninInput {
+  email: String!
+  password: String!
 }
 
 input SignupInput {
@@ -20,9 +91,42 @@ input SignupInput {
   username: String!
 }
 
+input UpdateItemInput {
+  amount: Int
+  category: category
+  description: String
+  discountPercent: Int
+  image1: String
+  image2: String
+  itemName: String
+  newPrice: Int
+}
+
 type User {
+  cartItems: [CartItem!]!
   email: String!
   id: ID!
-  password: String!
+  orders: [Order!]!
   username: String!
+  wishlistItems: [WishlistItem!]!
+}
+
+input UserWhereUniqueInput {
+  id: ID!
+}
+
+type WishlistItem {
+  id: ID!
+  item: Item!
+  itemId: ID!
+  user: User!
+  userId: ID!
+}
+
+enum category {
+  BAG
+  DEVICE
+  SHIRT
+  SHOE
+  WRISTWATCH
 }

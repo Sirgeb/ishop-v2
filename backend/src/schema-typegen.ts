@@ -14,14 +14,45 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CreateItemInput: { // input type
+    amount: number; // Int!
+    category: NexusGenEnums['category']; // category!
+    description: string; // String!
+    discountPercent: number; // Int!
+    image1: string; // String!
+    image2: string; // String!
+    itemName: string; // String!
+    newPrice: number; // Int!
+  }
+  ItemWhereUniqueInput: { // input type
+    id: string; // ID!
+  }
+  SigninInput: { // input type
+    email: string; // String!
+    password: string; // String!
+  }
   SignupInput: { // input type
     email: string; // String!
     password: string; // String!
     username: string; // String!
   }
+  UpdateItemInput: { // input type
+    amount?: number | null; // Int
+    category?: NexusGenEnums['category'] | null; // category
+    description?: string | null; // String
+    discountPercent?: number | null; // Int
+    image1?: string | null; // String
+    image2?: string | null; // String
+    itemName?: string | null; // String
+    newPrice?: number | null; // Int
+  }
+  UserWhereUniqueInput: { // input type
+    id: string; // ID!
+  }
 }
 
 export interface NexusGenEnums {
+  category: "BAG" | "DEVICE" | "SHIRT" | "SHOE" | "WRISTWATCH"
 }
 
 export interface NexusGenScalars {
@@ -36,13 +67,51 @@ export interface NexusGenObjects {
   AuthPayload: { // root type
     message: string; // String!
   }
+  CartItem: { // root type
+    id: string; // ID!
+    itemId: string; // ID!
+    quantity: number; // Int!
+    userId: string; // ID!
+  }
+  Item: { // root type
+    amount: number; // Int!
+    category: NexusGenEnums['category']; // category!
+    description: string; // String!
+    discountPercent: string; // String!
+    id: string; // ID!
+    image1: string; // String!
+    image2: string; // String!
+    itemName: string; // String!
+    newPrice: number; // Int!
+  }
   Mutation: {};
+  Order: { // root type
+    charge: string; // String!
+    id: string; // ID!
+    total: number; // Int!
+    userId: string; // ID!
+  }
+  OrderItem: { // root type
+    description: string; // String!
+    id: string; // ID!
+    image1: string; // String!
+    image2: string; // String!
+    itemName: string; // String!
+    newPrice: number; // Int!
+    orderId: string; // ID!
+    quantity: number; // Int!
+    userId: string; // ID!
+  }
   Query: {};
   User: { // root type
     email: string; // String!
     id: string; // ID!
-    password: string; // String!
     username: string; // String!
+  }
+  WishlistItem: { // root type
+    id: string; // ID!
+    itemId: string; // ID!
+    userId: string; // ID!
   }
 }
 
@@ -54,23 +123,79 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   AuthPayload: { // field return type
     message: string; // String!
   }
+  CartItem: { // field return type
+    id: string; // ID!
+    item: NexusGenRootTypes['Item']; // Item!
+    itemId: string; // ID!
+    quantity: number; // Int!
+    user: NexusGenRootTypes['User']; // User!
+    userId: string; // ID!
+  }
+  Item: { // field return type
+    amount: number; // Int!
+    cartItems: NexusGenRootTypes['CartItem'][]; // [CartItem!]!
+    category: NexusGenEnums['category']; // category!
+    description: string; // String!
+    discountPercent: string; // String!
+    id: string; // ID!
+    image1: string; // String!
+    image2: string; // String!
+    itemName: string; // String!
+    newPrice: number; // Int!
+    wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
+  }
   Mutation: { // field return type
+    createItem: NexusGenRootTypes['Item']; // Item!
+    deleteItem: NexusGenRootTypes['Item']; // Item!
+    signin: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    updateItem: NexusGenRootTypes['Item'] | null; // Item
+  }
+  Order: { // field return type
+    charge: string; // String!
+    id: string; // ID!
+    total: number; // Int!
+    user: NexusGenRootTypes['User']; // User!
+    userId: string; // ID!
+  }
+  OrderItem: { // field return type
+    description: string; // String!
+    id: string; // ID!
+    image1: string; // String!
+    image2: string; // String!
+    itemName: string; // String!
+    newPrice: number; // Int!
+    orderId: string; // ID!
+    quantity: number; // Int!
+    user: NexusGenRootTypes['User']; // User!
+    userId: string; // ID!
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    getUser: NexusGenRootTypes['User'] | null; // User
+    getUsers: NexusGenRootTypes['User'][]; // [User!]!
+    item: NexusGenRootTypes['Item'] | null; // Item
+    items: NexusGenRootTypes['Item'][]; // [Item!]!
   }
   User: { // field return type
+    cartItems: NexusGenRootTypes['CartItem'][]; // [CartItem!]!
     email: string; // String!
     id: string; // ID!
-    password: string; // String!
+    orders: NexusGenRootTypes['Order'][]; // [Order!]!
     username: string; // String!
+    wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
+  }
+  WishlistItem: { // field return type
+    id: string; // ID!
+    item: NexusGenRootTypes['Item']; // Item!
+    itemId: string; // ID!
+    user: NexusGenRootTypes['User']; // User!
+    userId: string; // ID!
   }
 }
 
@@ -78,24 +203,101 @@ export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
     message: 'String'
   }
+  CartItem: { // field return type name
+    id: 'ID'
+    item: 'Item'
+    itemId: 'ID'
+    quantity: 'Int'
+    user: 'User'
+    userId: 'ID'
+  }
+  Item: { // field return type name
+    amount: 'Int'
+    cartItems: 'CartItem'
+    category: 'category'
+    description: 'String'
+    discountPercent: 'String'
+    id: 'ID'
+    image1: 'String'
+    image2: 'String'
+    itemName: 'String'
+    newPrice: 'Int'
+    wishlistItems: 'WishlistItem'
+  }
   Mutation: { // field return type name
+    createItem: 'Item'
+    deleteItem: 'Item'
+    signin: 'AuthPayload'
     signup: 'AuthPayload'
+    updateItem: 'Item'
+  }
+  Order: { // field return type name
+    charge: 'String'
+    id: 'ID'
+    total: 'Int'
+    user: 'User'
+    userId: 'ID'
+  }
+  OrderItem: { // field return type name
+    description: 'String'
+    id: 'ID'
+    image1: 'String'
+    image2: 'String'
+    itemName: 'String'
+    newPrice: 'Int'
+    orderId: 'ID'
+    quantity: 'Int'
+    user: 'User'
+    userId: 'ID'
   }
   Query: { // field return type name
-    ok: 'Boolean'
+    getUser: 'User'
+    getUsers: 'User'
+    item: 'Item'
+    items: 'Item'
   }
   User: { // field return type name
+    cartItems: 'CartItem'
     email: 'String'
     id: 'ID'
-    password: 'String'
+    orders: 'Order'
     username: 'String'
+    wishlistItems: 'WishlistItem'
+  }
+  WishlistItem: { // field return type name
+    id: 'ID'
+    item: 'Item'
+    itemId: 'ID'
+    user: 'User'
+    userId: 'ID'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createItem: { // args
+      input: NexusGenInputs['CreateItemInput']; // CreateItemInput!
+    }
+    deleteItem: { // args
+      where: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
+    signin: { // args
+      input: NexusGenInputs['SigninInput']; // SigninInput!
+    }
     signup: { // args
       input: NexusGenInputs['SignupInput']; // SignupInput!
+    }
+    updateItem: { // args
+      input: NexusGenInputs['UpdateItemInput']; // UpdateItemInput!
+      where: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
+  }
+  Query: {
+    getUser: { // args
+      where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
+    }
+    item: { // args
+      where: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
     }
   }
 }
@@ -110,7 +312,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

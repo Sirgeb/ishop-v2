@@ -21,7 +21,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Item" (
     "id" TEXT NOT NULL,
     "itemName" TEXT NOT NULL,
-    "discountPercent" TEXT NOT NULL,
+    "discountPercent" INTEGER NOT NULL,
     "image1" TEXT NOT NULL,
     "image2" TEXT NOT NULL,
     "category" "Category" NOT NULL,
@@ -85,6 +85,9 @@ CREATE TABLE "Order" (
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "CartItem" ADD CONSTRAINT "CartItem_itemId_fkey" FOREIGN KEY ("itemId") REFERENCES "Item"("id") ON DELETE CASCADE ON UPDATE CASCADE;

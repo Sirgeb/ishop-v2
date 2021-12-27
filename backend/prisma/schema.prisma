@@ -13,7 +13,7 @@ datasource db {
 model User {
   id            String         @id @default(cuid())
   username      String
-  email         String
+  email         String         @unique
   password      String
   permissions   Permission[]
   createdAt     DateTime       @default(now())
@@ -27,7 +27,7 @@ model User {
 model Item {
   id              String         @id @default(cuid())
   itemName        String
-  discountPercent String
+  discountPercent Int
   image1          String
   image2          String
   category        Category
