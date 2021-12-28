@@ -65,7 +65,8 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   AuthPayload: { // root type
-    message: string; // String!
+    accessToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
   }
   CartItem: { // root type
     id: string; // ID!
@@ -127,7 +128,8 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   AuthPayload: { // field return type
-    message: string; // String!
+    accessToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
   }
   CartItem: { // field return type
     id: string; // ID!
@@ -151,9 +153,12 @@ export interface NexusGenFieldTypes {
     wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
   }
   Mutation: { // field return type
+    addToCart: NexusGenRootTypes['Item']; // Item!
     createItem: NexusGenRootTypes['Item']; // Item!
     deleteItem: NexusGenRootTypes['Item']; // Item!
+    refreshAuth: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signin: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    signout: NexusGenRootTypes['User']; // User!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     updateItem: NexusGenRootTypes['Item'] | null; // Item
   }
@@ -201,7 +206,8 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
-    message: 'String'
+    accessToken: 'String'
+    user: 'User'
   }
   CartItem: { // field return type name
     id: 'ID'
@@ -225,9 +231,12 @@ export interface NexusGenFieldTypeNames {
     wishlistItems: 'WishlistItem'
   }
   Mutation: { // field return type name
+    addToCart: 'Item'
     createItem: 'Item'
     deleteItem: 'Item'
+    refreshAuth: 'AuthPayload'
     signin: 'AuthPayload'
+    signout: 'User'
     signup: 'AuthPayload'
     updateItem: 'Item'
   }
@@ -275,6 +284,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addToCart: { // args
+      input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
     createItem: { // args
       input: NexusGenInputs['CreateItemInput']; // CreateItemInput!
     }

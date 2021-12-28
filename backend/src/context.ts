@@ -2,7 +2,7 @@ import { PrismaClient, User } from "@prisma/client";
 import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 import { Request, Response } from "express";
 import { prisma } from "./prisma-client";
-
+import { getUserId } from "./utils/auth";
 export interface Context {
 	request: Request;
 	response: Response;
@@ -20,6 +20,18 @@ export async function createContext(
 		prisma: prisma,
 		user: null,
 	};
+
+	const userId = getUserId(context)
+
+	if (userId) {
+		const user = await prisma.user.findFirst({
+			where: {
+				id: userId
+			},
+			rejectOnNotFound: true
+		})
+		context.user = user
+	}
 	
 	return context
 }

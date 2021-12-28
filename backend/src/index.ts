@@ -5,6 +5,7 @@ import http from "http";
 import {
 	ApolloServerPluginLandingPageGraphQLPlayground
   } from "apollo-server-core";
+import cookieParser from "cookie-parser";
 import { schema } from "./schema";
 import { createContext } from "./context";
 
@@ -24,8 +25,9 @@ async function startApolloServer() {
 			ApolloServerPluginLandingPageGraphQLPlayground()
 		],
 	});
-	await server.start();
 
+	await server.start();
+	app.use(cookieParser());
 	server.applyMiddleware({ 
 		app,
 		cors: {
