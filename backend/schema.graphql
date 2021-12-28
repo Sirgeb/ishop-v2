@@ -3,7 +3,8 @@
 
 
 type AuthPayload {
-  message: String!
+  accessToken: String!
+  user: User!
 }
 
 type CartItem {
@@ -47,7 +48,9 @@ input ItemWhereUniqueInput {
 type Mutation {
   createItem(input: CreateItemInput!): Item!
   deleteItem(where: ItemWhereUniqueInput!): Item!
+  refreshAuth: AuthPayload!
   signin(input: SigninInput!): AuthPayload!
+  signout: User!
   signup(input: SignupInput!): AuthPayload!
   updateItem(input: UpdateItemInput!, where: ItemWhereUniqueInput!): Item
 }

@@ -65,7 +65,8 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   AuthPayload: { // root type
-    message: string; // String!
+    accessToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
   }
   CartItem: { // root type
     id: string; // ID!
@@ -127,7 +128,8 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   AuthPayload: { // field return type
-    message: string; // String!
+    accessToken: string; // String!
+    user: NexusGenRootTypes['User']; // User!
   }
   CartItem: { // field return type
     id: string; // ID!
@@ -153,7 +155,9 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createItem: NexusGenRootTypes['Item']; // Item!
     deleteItem: NexusGenRootTypes['Item']; // Item!
+    refreshAuth: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signin: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    signout: NexusGenRootTypes['User']; // User!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     updateItem: NexusGenRootTypes['Item'] | null; // Item
   }
@@ -201,7 +205,8 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
-    message: 'String'
+    accessToken: 'String'
+    user: 'User'
   }
   CartItem: { // field return type name
     id: 'ID'
@@ -227,7 +232,9 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createItem: 'Item'
     deleteItem: 'Item'
+    refreshAuth: 'AuthPayload'
     signin: 'AuthPayload'
+    signout: 'User'
     signup: 'AuthPayload'
     updateItem: 'Item'
   }
