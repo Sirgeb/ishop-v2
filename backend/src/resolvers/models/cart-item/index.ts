@@ -10,7 +10,7 @@ export const CartItem = objectType({
     t.int("quantity");
     t.id("itemId");
     t.id("userId");
-    t.nonNull.field("item", {
+    t.field("item", {
     type: Item,
     resolve: async (root, _args, ctx: Context) => {
       return ctx.prisma.item.findUnique({
@@ -21,7 +21,7 @@ export const CartItem = objectType({
       })
     }
   })
-  t.nonNull.field("user", {
+  t.field("user", {
     type: User,
     resolve: async (root, _args, ctx: Context) => {
       return ctx.prisma.user.findUnique({

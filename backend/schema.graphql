@@ -42,14 +42,19 @@ type Item {
 }
 
 input ItemWhereUniqueInput {
-  id: ID!
+  itemId: ID!
 }
 
 type Mutation {
-  addToCart(input: ItemWhereUniqueInput!): Item!
+  addItemToCart(input: ItemWhereUniqueInput!): CartItem!
+  addItemToWishlist(input: addItemToWishlistInput!): WishlistItem!
   createItem(input: CreateItemInput!): Item!
+  decreaseCartItemQuantity(input: ItemWhereUniqueInput!): CartItem!
   deleteItem(where: ItemWhereUniqueInput!): Item!
+  increaseCartItemQuantity(input: ItemWhereUniqueInput!): CartItem!
+  moveWishlistItemToCart(input: ItemWhereUniqueInput!): CartItem!
   refreshAuth: AuthPayload!
+  removeCartItem(input: ItemWhereUniqueInput!): CartItem!
   signin(input: SigninInput!): AuthPayload!
   signout: User!
   signup(input: SignupInput!): AuthPayload!
@@ -78,10 +83,12 @@ type OrderItem {
 }
 
 type Query {
+  cartItems: [CartItem!]!
   getUser(where: UserWhereUniqueInput!): User
   getUsers: [User!]!
   item(where: ItemWhereUniqueInput!): Item
   items: [Item!]!
+  wishlistItems: [WishlistItem!]!
 }
 
 input SigninInput {
@@ -125,6 +132,10 @@ type WishlistItem {
   itemId: ID!
   user: User!
   userId: ID!
+}
+
+input addItemToWishlistInput {
+  itemId: ID!
 }
 
 enum category {

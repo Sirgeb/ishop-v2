@@ -34,7 +34,7 @@ export const updateItem = mutationField("updateItem", {
           ...args.input
         },
         where: {
-          id: args.where.id
+          id: args.where.itemId
         }
       })
     } catch (error) {
@@ -52,7 +52,7 @@ export const deleteItem = mutationField("deleteItem", {
     try {
       return ctx.prisma.item.delete({
         where: {
-          id: args.where.id
+          id: args.where.itemId
         }
       })
     } catch (error) {

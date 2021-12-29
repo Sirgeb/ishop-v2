@@ -32,6 +32,6 @@ export const UpdateItemInput = inputObjectType({
 export const ItemWhereUniqueInput = inputObjectType({
 	name: "ItemWhereUniqueInput",
 	definition(t) {
-		t.nonNull.id("id");
+		t.nonNull.id("itemId");
 	},
 });

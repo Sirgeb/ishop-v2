@@ -25,7 +25,7 @@ export interface NexusGenInputs {
     newPrice: number; // Int!
   }
   ItemWhereUniqueInput: { // input type
-    id: string; // ID!
+    itemId: string; // ID!
   }
   SigninInput: { // input type
     email: string; // String!
@@ -48,6 +48,9 @@ export interface NexusGenInputs {
   }
   UserWhereUniqueInput: { // input type
     id: string; // ID!
+  }
+  addItemToWishlistInput: { // input type
+    itemId: string; // ID!
   }
 }
 
@@ -153,10 +156,15 @@ export interface NexusGenFieldTypes {
     wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
   }
   Mutation: { // field return type
-    addToCart: NexusGenRootTypes['Item']; // Item!
+    addItemToCart: NexusGenRootTypes['CartItem']; // CartItem!
+    addItemToWishlist: NexusGenRootTypes['WishlistItem']; // WishlistItem!
     createItem: NexusGenRootTypes['Item']; // Item!
+    decreaseCartItemQuantity: NexusGenRootTypes['CartItem']; // CartItem!
     deleteItem: NexusGenRootTypes['Item']; // Item!
+    increaseCartItemQuantity: NexusGenRootTypes['CartItem']; // CartItem!
+    moveWishlistItemToCart: NexusGenRootTypes['CartItem']; // CartItem!
     refreshAuth: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    removeCartItem: NexusGenRootTypes['CartItem']; // CartItem!
     signin: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     signout: NexusGenRootTypes['User']; // User!
     signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
@@ -182,10 +190,12 @@ export interface NexusGenFieldTypes {
     userId: string; // ID!
   }
   Query: { // field return type
+    cartItems: NexusGenRootTypes['CartItem'][]; // [CartItem!]!
     getUser: NexusGenRootTypes['User'] | null; // User
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     item: NexusGenRootTypes['Item'] | null; // Item
     items: NexusGenRootTypes['Item'][]; // [Item!]!
+    wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
   }
   User: { // field return type
     cartItems: NexusGenRootTypes['CartItem'][]; // [CartItem!]!
@@ -231,10 +241,15 @@ export interface NexusGenFieldTypeNames {
     wishlistItems: 'WishlistItem'
   }
   Mutation: { // field return type name
-    addToCart: 'Item'
+    addItemToCart: 'CartItem'
+    addItemToWishlist: 'WishlistItem'
     createItem: 'Item'
+    decreaseCartItemQuantity: 'CartItem'
     deleteItem: 'Item'
+    increaseCartItemQuantity: 'CartItem'
+    moveWishlistItemToCart: 'CartItem'
     refreshAuth: 'AuthPayload'
+    removeCartItem: 'CartItem'
     signin: 'AuthPayload'
     signout: 'User'
     signup: 'AuthPayload'
@@ -260,10 +275,12 @@ export interface NexusGenFieldTypeNames {
     userId: 'ID'
   }
   Query: { // field return type name
+    cartItems: 'CartItem'
     getUser: 'User'
     getUsers: 'User'
     item: 'Item'
     items: 'Item'
+    wishlistItems: 'WishlistItem'
   }
   User: { // field return type name
     cartItems: 'CartItem'
@@ -284,14 +301,29 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    addToCart: { // args
+    addItemToCart: { // args
       input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
+    addItemToWishlist: { // args
+      input: NexusGenInputs['addItemToWishlistInput']; // addItemToWishlistInput!
     }
     createItem: { // args
       input: NexusGenInputs['CreateItemInput']; // CreateItemInput!
     }
+    decreaseCartItemQuantity: { // args
+      input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
     deleteItem: { // args
       where: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
+    increaseCartItemQuantity: { // args
+      input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
+    moveWishlistItemToCart: { // args
+      input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
+    removeCartItem: { // args
+      input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
     }
     signin: { // args
       input: NexusGenInputs['SigninInput']; // SigninInput!

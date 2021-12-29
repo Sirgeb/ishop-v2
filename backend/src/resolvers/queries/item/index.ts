@@ -9,9 +9,12 @@ export const item = queryField("item", {
     where: nonNull(ItemWhereUniqueInput)
   },
 	resolve: async (_root, args, ctx: Context) => {
+		if (ctx.user === null) {
+		  throw new Error('Sorry, You must be signed in')
+		}
 		return ctx.prisma.item.findUnique({
       where: {
-        id: args.where.id
+        id: args.where.itemId
       }
     })
 	},
@@ -20,6 +23,9 @@ export const item = queryField("item", {
 export const items = queryField("items", {
 	type: nonNull(list(nonNull(Item))),
 	resolve: async (_root, _args, ctx: Context) => {
+		if (ctx.user === null) {
+			throw new Error('Sorry, You must be signed in')
+		}
 		return ctx.prisma.item.findMany({})
 	},
 });

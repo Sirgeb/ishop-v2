@@ -3,7 +3,7 @@ import { UserWhereUniqueInput } from "../../inputs";
 import { Context } from "../../../context";
 import { User } from "../../models";
 
-export const board = queryField("getUser", {
+export const getUser = queryField("getUser", {
 	type: nullable(User),
     args: {
       where: nonNull(UserWhereUniqueInput)
