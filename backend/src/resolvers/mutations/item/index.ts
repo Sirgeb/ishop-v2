@@ -10,9 +10,18 @@ export const createItem = mutationField("createItem", {
   },
   resolve: async (_root, args, ctx: Context) => {
     try {
+      const hasPermission = ctx.user && ctx.user.permissions.some(permission =>
+        ['ADMIN', 'ITEMCREATE'].includes(permission));
+
+      if (!hasPermission) {
+        throw new Error("You don't have permission to do that!");
+      }
+
       return ctx.prisma.item.create({
         data: {
-          ...args.input
+          ...args.input, 
+          itemName: args.input.itemName.toLowerCase(),
+          description: args.input.description.toLowerCase()
         }
       })
     } catch (error) {
@@ -29,6 +38,13 @@ export const updateItem = mutationField("updateItem", {
   },
   resolve: async (_root, args, ctx: Context) => {
     try {
+      const hasPermission = ctx.user && ctx.user.permissions.some(permission =>
+        ['ADMIN', 'ITEMCREATE'].includes(permission));
+
+      if (!hasPermission) {
+        throw new Error("You don't have permission to do that!");
+      }
+
       return ctx.prisma.item.update({
         data: {
           ...args.input
@@ -49,6 +65,13 @@ export const deleteItem = mutationField("deleteItem", {
     where: nonNull(ItemWhereUniqueInput)
   },
   resolve: async (_root, args, ctx: Context) => {
+    const hasPermission = ctx.user && ctx.user.permissions.some(permission =>
+      ['ADMIN', 'ITEMCREATE'].includes(permission));
+
+    if (!hasPermission) {
+      throw new Error("You don't have permission to do that!");
+    }
+
     try {
       return ctx.prisma.item.delete({
         where: {

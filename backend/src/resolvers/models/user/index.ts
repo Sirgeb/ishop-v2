@@ -13,21 +13,21 @@ export const User = objectType({
     t.nonNull.list.nonNull.field("cartItems", {
       type: CartItem,
       resolve: async (root, _args, ctx: Context) => {
-        return ctx.prisma.user.findUnique({
+        return ctx.prisma.cartItem.findMany({
           where: {
-            id: root.id
+            userId: root.id
           }
-        }).cartItems()
+        })
       }
     })
     t.nonNull.list.nonNull.field("wishlistItems", {
       type: WishlistItem,
       resolve: async (root, _args, ctx: Context) => {
-        return ctx.prisma.user.findUnique({
+        return ctx.prisma.wishlistItem.findMany({
           where: {
-            id: root.id
+            userId: root.id
           }
-        }).WishlistItems()
+        })
       }
     })
     t.nonNull.list.nonNull.field("orders", {

@@ -14,6 +14,16 @@ export const addItemToWishlist = mutationField("addItemToWishlist", {
       throw new Error('Sorry, You must be signed in')
     }
 
+    const item = await ctx.prisma.item.findFirst({
+      where: {
+        id: args.input.itemId
+      }
+    })
+
+    if (!item) {
+      throw new Error('Item does not exist');
+    }
+
     const existingWishlist = await ctx.prisma.wishlistItem.findFirst({
       where: {
         userId: ctx.user.id,
@@ -27,7 +37,7 @@ export const addItemToWishlist = mutationField("addItemToWishlist", {
           id: existingWishlist.id
         }
       })
-    }
+    } 
 
     return ctx.prisma.wishlistItem.create({
       data: {

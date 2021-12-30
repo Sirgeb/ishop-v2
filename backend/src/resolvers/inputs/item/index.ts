@@ -12,7 +12,7 @@ export const CreateItemInput = inputObjectType({
     t.nonNull.int("amount");
     t.nonNull.int("newPrice");
     t.nonNull.string("description");
-	},
+	}
 });
 
 export const UpdateItemInput = inputObjectType({
@@ -26,12 +26,27 @@ export const UpdateItemInput = inputObjectType({
     t.int("amount");
     t.int("newPrice");
     t.string("description");
-	},
+	}
 });
 
 export const ItemWhereUniqueInput = inputObjectType({
 	name: "ItemWhereUniqueInput",
 	definition(t) {
 		t.nonNull.id("itemId");
-	},
+	}
+});
+
+export const ItemsInput = inputObjectType({
+	name: "ItemsInput",
+	definition(t) {
+		t.field({ name: 'category', type: Category, default: undefined });
+		t.int("discountPercent_gt");
+	}
+});
+
+export const SearchTermInput = inputObjectType({
+	name: "SearchTermInput",
+	definition(t) {
+		t.nonNull.string("searchTerm");
+	}
 });

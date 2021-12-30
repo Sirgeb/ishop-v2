@@ -24,7 +24,8 @@ export const signup = mutationField("signup", {
       const user = await ctx.prisma.user.create({
         data: {
           ...args.input,
-          password
+          password,
+          permissions: ["USER"]
         }
       })
       const { accessToken } = await createTokens({ userId: user.id }, ctx);

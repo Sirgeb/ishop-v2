@@ -8,21 +8,21 @@ datasource db {
 }
 
 model User {
-  id            String        @id @default(cuid())
+  id            String         @id @default(cuid())
   username      String
-  email         String        @unique
+  email         String         @unique
   password      String
   permissions   Permission[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  cartItems     CartItem?
-  Order         Order?
-  OrderItems    OrderItem?
-  WishlistItems WishlistItem?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  cartItems     CartItem[]
+  Orders        Order[]
+  OrderItems    OrderItem[]
+  WishlistItems WishlistItem[]
 }
 
 model Item {
-  id              String        @id @default(cuid())
+  id              String         @id @default(cuid())
   itemName        String
   discountPercent Int
   image1          String
@@ -31,17 +31,17 @@ model Item {
   amount          Int
   newPrice        Int
   description     String
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-  CartItems       CartItem?
-  WishlistItems   WishlistItem?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  CartItems       CartItem[]
+  WishlistItems   WishlistItem[]
 }
 
 model CartItem {
   id        String   @id @default(cuid())
   quantity  Int      @default(1)
-  itemId    String   @unique
-  userId    String   @unique
+  itemId    String
+  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
@@ -50,8 +50,8 @@ model CartItem {
 
 model WishlistItem {
   id        String   @id @default(cuid())
-  itemId    String   @unique
-  userId    String   @unique
+  itemId    String
+  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
@@ -66,8 +66,8 @@ model OrderItem {
   newPrice    Int
   description String
   quantity    Int
-  userId      String   @unique
-  orderId     String?  @unique
+  userId      String
+  orderId     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Order       Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
@@ -75,14 +75,14 @@ model OrderItem {
 }
 
 model Order {
-  id        String     @id @default(cuid())
-  total     Int
-  userId    String     @unique
-  charge    String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items     OrderItem?
+  id         String      @id @default(cuid())
+  total      Int
+  userId     String
+  charge     String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
 }
 
 enum Category {

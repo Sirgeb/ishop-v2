@@ -1,7 +1,7 @@
 import { mutationField, nonNull } from "nexus";
 import { CartItem } from "../../models";
 import { Context } from "../../../context";
-import { ItemWhereUniqueInput } from "../../inputs";
+import { ItemWhereUniqueInput, MoveItemToCartInput } from "../../inputs";
 
 export const addItemToCart = mutationField("addItemToCart", {
   type: nonNull(CartItem),
@@ -184,7 +184,7 @@ export const decreaseCartItemQuantity = mutationField("decreaseCartItemQuantity"
 export const moveWishlistItemToCart = mutationField("moveWishlistItemToCart", {
   type: nonNull(CartItem),
   args: {
-    input: nonNull(ItemWhereUniqueInput)
+    input: nonNull(MoveItemToCartInput)
   },
   resolve: async (_root, args, ctx: Context) => {
     if (ctx.user === null) {
@@ -193,8 +193,7 @@ export const moveWishlistItemToCart = mutationField("moveWishlistItemToCart", {
  
     await ctx.prisma.wishlistItem.delete({
       where: {
-        userId: ctx.user.id,
-        itemId: args.input.itemId
+        id: args.input.wishlistItemId
       }
     }) 
     

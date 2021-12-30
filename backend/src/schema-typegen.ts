@@ -24,8 +24,22 @@ export interface NexusGenInputs {
     itemName: string; // String!
     newPrice: number; // Int!
   }
+  CreateOrderInput: { // input type
+    token: string; // String!
+  }
   ItemWhereUniqueInput: { // input type
     itemId: string; // ID!
+  }
+  ItemsInput: { // input type
+    category?: NexusGenEnums['category'] | null; // category
+    discountPercent_gt?: number | null; // Int
+  }
+  MoveItemToCartInput: { // input type
+    itemId: string; // ID!
+    wishlistItemId: string; // ID!
+  }
+  SearchTermInput: { // input type
+    searchTerm: string; // String!
   }
   SigninInput: { // input type
     email: string; // String!
@@ -159,6 +173,7 @@ export interface NexusGenFieldTypes {
     addItemToCart: NexusGenRootTypes['CartItem']; // CartItem!
     addItemToWishlist: NexusGenRootTypes['WishlistItem']; // WishlistItem!
     createItem: NexusGenRootTypes['Item']; // Item!
+    createOrder: NexusGenRootTypes['Order']; // Order!
     decreaseCartItemQuantity: NexusGenRootTypes['CartItem']; // CartItem!
     deleteItem: NexusGenRootTypes['Item']; // Item!
     increaseCartItemQuantity: NexusGenRootTypes['CartItem']; // CartItem!
@@ -173,6 +188,7 @@ export interface NexusGenFieldTypes {
   Order: { // field return type
     charge: string; // String!
     id: string; // ID!
+    orderItems: NexusGenRootTypes['OrderItem'][]; // [OrderItem!]!
     total: number; // Int!
     user: NexusGenRootTypes['User']; // User!
     userId: string; // ID!
@@ -195,6 +211,9 @@ export interface NexusGenFieldTypes {
     getUsers: NexusGenRootTypes['User'][]; // [User!]!
     item: NexusGenRootTypes['Item'] | null; // Item
     items: NexusGenRootTypes['Item'][]; // [Item!]!
+    me: NexusGenRootTypes['User'] | null; // User
+    orders: NexusGenRootTypes['Order'][]; // [Order!]!
+    searchItems: NexusGenRootTypes['Item'][]; // [Item!]!
     wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
   }
   User: { // field return type
@@ -244,6 +263,7 @@ export interface NexusGenFieldTypeNames {
     addItemToCart: 'CartItem'
     addItemToWishlist: 'WishlistItem'
     createItem: 'Item'
+    createOrder: 'Order'
     decreaseCartItemQuantity: 'CartItem'
     deleteItem: 'Item'
     increaseCartItemQuantity: 'CartItem'
@@ -258,6 +278,7 @@ export interface NexusGenFieldTypeNames {
   Order: { // field return type name
     charge: 'String'
     id: 'ID'
+    orderItems: 'OrderItem'
     total: 'Int'
     user: 'User'
     userId: 'ID'
@@ -280,6 +301,9 @@ export interface NexusGenFieldTypeNames {
     getUsers: 'User'
     item: 'Item'
     items: 'Item'
+    me: 'User'
+    orders: 'Order'
+    searchItems: 'Item'
     wishlistItems: 'WishlistItem'
   }
   User: { // field return type name
@@ -310,6 +334,9 @@ export interface NexusGenArgTypes {
     createItem: { // args
       input: NexusGenInputs['CreateItemInput']; // CreateItemInput!
     }
+    createOrder: { // args
+      input: NexusGenInputs['CreateOrderInput']; // CreateOrderInput!
+    }
     decreaseCartItemQuantity: { // args
       input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
     }
@@ -320,7 +347,7 @@ export interface NexusGenArgTypes {
       input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
     }
     moveWishlistItemToCart: { // args
-      input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+      input: NexusGenInputs['MoveItemToCartInput']; // MoveItemToCartInput!
     }
     removeCartItem: { // args
       input: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
@@ -342,6 +369,12 @@ export interface NexusGenArgTypes {
     }
     item: { // args
       where: NexusGenInputs['ItemWhereUniqueInput']; // ItemWhereUniqueInput!
+    }
+    items: { // args
+      input?: NexusGenInputs['ItemsInput'] | null; // ItemsInput
+    }
+    searchItems: { // args
+      input: NexusGenInputs['SearchTermInput']; // SearchTermInput!
     }
   }
 }

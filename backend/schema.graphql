@@ -27,6 +27,10 @@ input CreateItemInput {
   newPrice: Int!
 }
 
+input CreateOrderInput {
+  token: String!
+}
+
 type Item {
   amount: Int!
   cartItems: [CartItem!]!
@@ -45,14 +49,25 @@ input ItemWhereUniqueInput {
   itemId: ID!
 }
 
+input ItemsInput {
+  category: category
+  discountPercent_gt: Int
+}
+
+input MoveItemToCartInput {
+  itemId: ID!
+  wishlistItemId: ID!
+}
+
 type Mutation {
   addItemToCart(input: ItemWhereUniqueInput!): CartItem!
   addItemToWishlist(input: addItemToWishlistInput!): WishlistItem!
   createItem(input: CreateItemInput!): Item!
+  createOrder(input: CreateOrderInput!): Order!
   decreaseCartItemQuantity(input: ItemWhereUniqueInput!): CartItem!
   deleteItem(where: ItemWhereUniqueInput!): Item!
   increaseCartItemQuantity(input: ItemWhereUniqueInput!): CartItem!
-  moveWishlistItemToCart(input: ItemWhereUniqueInput!): CartItem!
+  moveWishlistItemToCart(input: MoveItemToCartInput!): CartItem!
   refreshAuth: AuthPayload!
   removeCartItem(input: ItemWhereUniqueInput!): CartItem!
   signin(input: SigninInput!): AuthPayload!
@@ -64,6 +79,7 @@ type Mutation {
 type Order {
   charge: String!
   id: ID!
+  orderItems: [OrderItem!]!
   total: Int!
   user: User!
   userId: ID!
@@ -87,8 +103,15 @@ type Query {
   getUser(where: UserWhereUniqueInput!): User
   getUsers: [User!]!
   item(where: ItemWhereUniqueInput!): Item
-  items: [Item!]!
+  items(input: ItemsInput): [Item!]!
+  me: User
+  orders: [Order!]!
+  searchItems(input: SearchTermInput!): [Item!]!
   wishlistItems: [WishlistItem!]!
+}
+
+input SearchTermInput {
+  searchTerm: String!
 }
 
 input SigninInput {
