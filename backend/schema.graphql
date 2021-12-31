@@ -39,7 +39,7 @@ type Item {
   discountPercent: String!
   id: ID!
   image1: String!
-  image2: String!
+  image2: String
   itemName: String!
   newPrice: Int!
   wishlistItems: [WishlistItem!]!

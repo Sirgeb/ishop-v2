@@ -26,7 +26,7 @@ model Item {
   itemName        String
   discountPercent Int
   image1          String
-  image2          String
+  image2          String?
   category        Category
   amount          Int
   newPrice        Int

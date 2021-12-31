@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev -r dotenv/config --no-notify --respawn --transpile-only src"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^3.7.0",
     "apollo-server-core": "3.3.0",

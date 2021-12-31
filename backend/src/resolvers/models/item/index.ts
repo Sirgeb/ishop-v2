@@ -10,7 +10,7 @@ export const Item = objectType({
     t.string("itemName");
     t.string("discountPercent");
     t.string("image1");
-    t.string("image2");
+    t.nullable.string("image2");
     t.field({ name: 'category', type: Category })
     t.int("amount");
     t.int("newPrice");

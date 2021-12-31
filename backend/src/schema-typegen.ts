@@ -98,7 +98,7 @@ export interface NexusGenObjects {
     discountPercent: string; // String!
     id: string; // ID!
     image1: string; // String!
-    image2: string; // String!
+    image2?: string | null; // String
     itemName: string; // String!
     newPrice: number; // Int!
   }
@@ -164,7 +164,7 @@ export interface NexusGenFieldTypes {
     discountPercent: string; // String!
     id: string; // ID!
     image1: string; // String!
-    image2: string; // String!
+    image2: string | null; // String
     itemName: string; // String!
     newPrice: number; // Int!
     wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
