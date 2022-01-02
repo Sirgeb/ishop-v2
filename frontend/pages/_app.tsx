@@ -1,13 +1,16 @@
 import { ApolloProvider } from '@apollo/client';
 import Layout from '../components/App/Layout/Layout';
+import AppContext from '../hooks/AppContext';
 import withData from '../lib/withData';
 
 function MyApp({ Component, pageProps, apollo }: any) {
   return (
     <ApolloProvider client={apollo}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <AppContext>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AppContext>
     </ApolloProvider>
   );
 }
