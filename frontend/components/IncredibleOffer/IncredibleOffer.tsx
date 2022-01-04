@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { OrderByItemName, OrderType, useItemsQuery } from '../../generated';
-
 import IncredibleOfferStyles from './IncredibleOfferStyles';
 import IncredibleOfferButtonLink from './IncredibleOfferButtonLink';
 import formatMoney from '../../lib/formatMoney';
@@ -11,13 +10,13 @@ import Spinner from '../Spinner/Spinner';
 
 interface IIncredibleOffer {
   spacing?: string;
-  pageLink: string;
   skip?: number;
+  itemsCount?: number | undefined;
   onCollectionPreview: boolean;
   collectionName: string;
 }
 
-const IncredibleOffer = ({ onCollectionPreview, spacing, skip, collectionName }: IIncredibleOffer) => {
+const IncredibleOffer = ({ onCollectionPreview, spacing, skip, collectionName, itemsCount }: IIncredibleOffer) => {
   const { data, loading } = useItemsQuery({
     variables: {
       input: {
@@ -38,7 +37,7 @@ const IncredibleOffer = ({ onCollectionPreview, spacing, skip, collectionName }:
         !onCollectionPreview && (
           <PageInfo
             message1={collectionName}
-            message2={`We have ${data && data.items && data.items.length} items for you`}
+            message2={`We have ${itemsCount} items for you`}
           />
         )
       }

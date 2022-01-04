@@ -27,18 +27,15 @@ export const SEARCH_ITEMS_QUERY = gql`
   }
 `;
 
-export const ADD_ITEM_TO_WISHLIST = gql`
-  mutation addItemToWishlist($input: addItemToWishlistInput!) {
-    addItemToWishlist(input: $input) {
-      id 
-    }
-  }
-`;
-
-export const ADD_ITEM_TO_CART = gql`
-  mutation addItemToCart($input: ItemWhereUniqueInput!) {
-    addItemToCart(input: $input) {
+export const ITEM_QUERY = gql`
+  query item($where: ItemWhereUniqueInput!) {
+    item(where: $where) {
       id
+      itemName
+      image1
+      image2
+      newPrice
+      description
     }
   }
 `;

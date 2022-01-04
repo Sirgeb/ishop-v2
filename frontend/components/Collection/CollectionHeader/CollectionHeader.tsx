@@ -1,21 +1,31 @@
 import React from 'react';
 import Link from 'next/link';
+import { Category, useItemsQuery } from '../../../generated';
 
 import CollectionHeaderStyles from './CollectionHeaderStyles';
 import formatText from '../../../lib/formatText';
+import { getCollectionCategory } from '../../../lib/func';
 
-export type ICollectionHeader = {
-  currentItems: any
+interface ICollectionHeader {
   collectionName: string;
   pageLink: string;
 }
 
-const CollectionHeader = ({ currentItems, collectionName, pageLink }: ICollectionHeader) => {
+const CollectionHeader = ({ collectionName, pageLink }: ICollectionHeader) => {
+  const { data } = useItemsQuery({
+    variables: {
+      input: {
+        category: getCollectionCategory(collectionName) as Category
+      }
+    }
+  })
+
+  const itemsCount = data && data.items && data.items.length;
 
   return (
     <CollectionHeaderStyles>
       <div className="collection-info">
-        {collectionName} | {formatText(currentItems.length, collectionName)}
+        {collectionName} | {formatText(itemsCount as number, collectionName)}
       </div>
       <button>
         <Link href={pageLink}>

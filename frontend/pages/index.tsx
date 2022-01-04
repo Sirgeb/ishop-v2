@@ -7,10 +7,12 @@ const Home = () => {
 
   return (
     <>
-      <PageInfo message1={`WELCOME TO iSHOP`} message2={`🔥 Hot Deals for you 👇`} />
+      <PageInfo
+        message1={`WELCOME TO iSHOP`}
+        message2={`🔥 Hot Deals for you 👇`}
+      />
 
       <IncredibleOffer
-        pageLink="/incredible-offer"
         collectionName="Incredible Offer"
         onCollectionPreview={true}
       />

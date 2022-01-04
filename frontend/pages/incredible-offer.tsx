@@ -1,70 +1,48 @@
 import React, { useLayoutEffect } from 'react';
-import { gql } from '@apollo/client';
-import { withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
-// import Pagination from '../components/Pagination/Pagination';
+import Pagination from '../components/Pagination/Pagination';
 import IncredibleOfferComponent from '../components/IncredibleOffer/IncredibleOffer';
+import { OrderByItemName, OrderType, useItemsQuery } from '../generated';
 
 const perPage = 4;
 
-const INCREDIBLE_OFFER_QUERY = gql`
-  query ($skip: Int = 0, $first: Int = ${perPage}){
-    items(where: {
-      discountPercent_gt: 15
-    }, first: $first, skip: $skip, orderBy: createdAt_DESC) {
-      id
-      itemName
-      discountPercent
-      category
-      image1
-      image2
-      amount
-      newPrice
-      description
-    }
-    itemsInStore(where: {
-      discountPercent_gt: 15
-    }) {
-      id
-    }
-  }
-`;
-
-const PAGINATION_QUERY = gql`
-  query PAGINATION_QUERY {
-    itemsConnection(where: {
-      discountPercent_gt: 15
-    }) {
-      aggregate {
-        count
+const IncredibleOffer = ({ query }: { query: { page: string } }) => {
+  const router = useRouter();
+  const { data } = useItemsQuery({
+    variables: {
+      input: {
+        discountPercent_gt: 15,
+        orderByItemName: 'createdAt' as OrderByItemName,
+        orderType: 'desc' as OrderType
       }
     }
-  }
-`;
-
-const IncredibleOffer = ({ query, router }) => {
+  });
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
+  const noOfItems = data && data.items && data.items.length;
+
   return (
     <>
       <IncredibleOfferComponent
+        itemsCount={noOfItems}
         collectionName="Incredible Offer"
         skip={parseFloat(query.page) * perPage - perPage}
         onCollectionPreview={false}
         spacing="200px"
       />
 
-      {/* <Pagination 
-        PAGINATION_QUERY={PAGINATION_QUERY}
+      <Pagination
+        itemsCount={noOfItems}
         page={parseFloat(query.page) || 1}
         pathname={router.pathname}
         perPage={perPage}
         collection="Incredible Offer"
-      /> */}
+      />
     </>
   )
 }
 
-export default withRouter(IncredibleOffer);
+export default IncredibleOffer;

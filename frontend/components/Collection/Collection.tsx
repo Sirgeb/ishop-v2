@@ -9,14 +9,17 @@ import Spinner from '../Spinner/Spinner';
 
 import CollectionStyles from './CollectionStyles';
 import { getCollectionCategory } from '../../lib/func';
+import { perPage } from '../../config';
 
 export type ICollection = {
   collectionName: string;
-  pageLink: string;
+  pageLink?: string;
   onCollectionPreview: boolean;
+  skip?: number;
+  itemsCount?: number;
 }
 
-const Collection = ({ collectionName, pageLink, onCollectionPreview }: ICollection) => {
+const Collection = ({ collectionName, pageLink, onCollectionPreview, skip, itemsCount }: ICollection) => {
   const userData = useUserData();
   const { data: collectionData } = useItemsQuery({
     variables: {
@@ -24,20 +27,20 @@ const Collection = ({ collectionName, pageLink, onCollectionPreview }: ICollecti
         category: getCollectionCategory(collectionName) as Category,
         orderByItemName: 'createdAt' as OrderByItemName,
         orderType: 'desc' as OrderType,
-        take: 5
+        take: perPage,
+        skip: !!skip ? skip : undefined
       }
     }
   })
 
-  if (userData?.data === undefined) return null;
-  if (userData.loading) return <Spinner spacing="200px" />;
+  if (userData?.loading) return <Spinner spacing="200px" />;
 
   return (
     <>
       {
         !onCollectionPreview && (
           <PageInfo
-            message1={` ${formatText(collectionData !== undefined && collectionData.items.length, collectionName)} `}
+            message1={` ${formatText(itemsCount as number, collectionName)} `}
           />
         )
       }
@@ -45,9 +48,8 @@ const Collection = ({ collectionName, pageLink, onCollectionPreview }: ICollecti
       {
         onCollectionPreview && (
           <CollectionHeader
-            currentItems={collectionData && collectionData.items}
             collectionName={collectionName}
-            pageLink={pageLink}
+            pageLink={pageLink as string}
           />
         )
       }

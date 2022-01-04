@@ -3,8 +3,11 @@ import { useAddItemToWishlistMutation } from '../../generated';
 import { ME_QUERY } from '../../graphql/queries/user';
 import { useUserData } from '../../hooks/AppContext';
 import formatError from '../../lib/formatError';
+interface IProps {
+	id: string | null | undefined
+}
 
-const AddToWishList = ({ id }: { id: string; }) => {
+const AddToWishList = ({ id }: IProps) => {
 	const [addItemToWishlist, { loading }] = useAddItemToWishlistMutation({ refetchQueries: [{ query: ME_QUERY }] });
 	const userData = useUserData();
 	const wishlistItems = userData && userData.data && userData.data.me && userData.data.me.wishlistItems;
@@ -18,7 +21,7 @@ const AddToWishList = ({ id }: { id: string; }) => {
 				return addItemToWishlist({
 					variables: {
 						input: {
-							itemId: id
+							itemId: id as string
 						}
 					}
 				}).catch((err) =>
@@ -30,7 +33,7 @@ const AddToWishList = ({ id }: { id: string; }) => {
 			{wishlistItems && (
 				<>
 					{wishlistItems.map((wishListItem) => {
-						if (wishListItem.item.id.includes(id)) {
+						if (wishListItem.item.id.includes(id as string)) {
 							return (
 								<div key={wishListItem.item.id}>
 									{(active = true)}

@@ -8,7 +8,7 @@ const Footer = () => {
 		<FooterStyles>
 			iShop - Designed and developed by&nbsp;
 			<Link prefetch={false} href='https://gabriel-aniora.web.app/'>
-				<a target='_blank' title='My Profile Link'>
+				<a target='_blank' title='My Portfolio Link'>
 					Sirgeb | Hire Me
 				</a>
 			</Link>

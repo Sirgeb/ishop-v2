@@ -2,8 +2,11 @@ import React from 'react';
 import { useAddItemToCartMutation } from '../../generated';
 import { ME_QUERY } from '../../graphql/queries/user';
 import formatError from '../../lib/formatError';
+interface IProps {
+	id: string | null | undefined
+}
 
-const AddToCart = ({ id }: { id: string }) => {
+const AddToCart = ({ id }: IProps) => {
 	const [addItemToCart, { loading }] = useAddItemToCartMutation({
 		refetchQueries: [{ query: ME_QUERY }]
 	});
@@ -16,7 +19,7 @@ const AddToCart = ({ id }: { id: string }) => {
 				await addItemToCart({
 					variables: {
 						input: {
-							itemId: id,
+							itemId: id as string,
 						},
 					},
 				}).catch((err) => alert(formatError(err.toString())));

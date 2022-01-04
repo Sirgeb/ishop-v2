@@ -26,7 +26,7 @@ const Nav = () => {
         <li className="side-space">
           <Link href="/wishlist">
             <a><i className="fas fa-heart icon counter"></i><span>
-              <Counter count={me !== null ? wishlistItems && wishlistItems.length : 0} />
+              <Counter count={me ? wishlistItems && wishlistItems.length : 0} />
             </span></a>
           </Link>
         </li>
@@ -34,7 +34,7 @@ const Nav = () => {
           <Link href="/cart">
             <a><i className="fas fa-shopping-cart icon counter"></i><span>
               <Counter
-                count={me !== null ? cartItems && cartItems.reduce((tally, cartItem) => tally + cartItem.quantity, 0) : 0}
+                count={me ? cartItems && cartItems.reduce((tally, cartItem) => tally + cartItem.quantity, 0) : 0}
               />
             </span></a>
           </Link>
