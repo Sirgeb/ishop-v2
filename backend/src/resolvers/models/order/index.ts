@@ -11,6 +11,7 @@ export const Order = objectType({
     t.id("userId");
     t.int("total");
     t.string("charge");
+    t.string("createdAt");
     t.nonNull.field("orderItems", {
       type: nonNull(list(nonNull(OrderItem))),
       resolve: async (root, _args, ctx: Context) => {

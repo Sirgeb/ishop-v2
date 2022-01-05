@@ -1,4 +1,4 @@
-import { objectType } from "nexus";
+import { enumType, objectType } from "nexus";
 import { Context } from "../../../context";
 import { CartItem } from "../cart-item";
 import { Order } from "../order";
@@ -10,6 +10,7 @@ export const User = objectType({
     t.id("id");
     t.string("username"); 
     t.string("email");
+    t.field({ name: 'permissions', type: Permissions });
     t.nonNull.list.nonNull.field("cartItems", {
       type: CartItem,
       resolve: async (root, _args, ctx: Context) => {
@@ -41,4 +42,16 @@ export const User = objectType({
       }
     })
   }
+});
+
+export const Permissions = enumType({
+  name: 'permissions',
+  members: [
+    "ADMIN",
+    "USER",
+    "ITEMCREATE",
+    "ITEMUPDATE",
+    "ITEMDELETE",
+    "PERMISSIONUPDATE"
+	]
 });

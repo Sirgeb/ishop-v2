@@ -10,9 +10,6 @@ export const item = queryField("item", {
     where: nonNull(ItemWhereUniqueInput)
   },
 	resolve: async (_root, args, ctx: Context) => {
-		if (ctx.user === null) {
-		  throw new Error('Sorry, You must be signed in')
-		}
 		return ctx.prisma.item.findUnique({
       where: {
         id: args.where.itemId
@@ -27,6 +24,18 @@ export const items = queryField("items", {
 		input: nullable(ItemsInput)
 	},
 	resolve: async (_root, args, ctx: Context) => {
+		const filterOptions = {
+			orderBy: {
+				discountPercent: args.input?.orderByItemName === "discountPercent" &&  args.input.orderType || undefined,
+				amount: args.input?.orderByItemName === "amount" && args.input.orderType || undefined,
+				newPrice: args.input?.orderByItemName === "newPrice" && args.input.orderType || undefined,
+				createdAt: args.input?.orderByItemName === "createdAt" && args.input.orderType || undefined,
+				updatedAt: args.input?.orderByItemName === "updatedAt" && args.input.orderType || undefined,
+			},
+			skip: args.input?.skip || undefined,
+			take: args.input?.take || undefined
+		}
+		
 		if ((args && args.input && args.input.category !== undefined && !!args.input.category)
 			&& (args && args.input && args.input.discountPercent_gt && !!args.input.discountPercent_gt)
 		) {
@@ -42,7 +51,8 @@ export const items = queryField("items", {
 							}
 						}
 					]
-				}
+				}, 
+				...filterOptions
 			})
 		}
 	  else if ((args && args.input && args.input.category !== undefined && !!args.input.category)
@@ -60,10 +70,13 @@ export const items = queryField("items", {
 							}
 						}
 					]
-				}
+				},
+				...filterOptions
 			})
 		} else {
-			return ctx.prisma.item.findMany({});
+			return ctx.prisma.item.findMany({
+				...filterOptions
+			});
 		}
 	}
 });

@@ -1,4 +1,4 @@
-import { inputObjectType } from "nexus";
+import { enumType, inputObjectType } from "nexus";
 import { Category } from "../../models";
 
 export const CreateItemInput = inputObjectType({
@@ -41,6 +41,10 @@ export const ItemsInput = inputObjectType({
 	definition(t) {
 		t.field({ name: 'category', type: Category, default: undefined });
 		t.int("discountPercent_gt");
+		t.field({ name: 'orderByItemName', type: orderByItemName, default: undefined });
+		t.field({ name: 'orderType', type: orderType, default: undefined });
+		t.int("skip");
+		t.int("take");
 	}
 });
 
@@ -50,3 +54,22 @@ export const SearchTermInput = inputObjectType({
 		t.nonNull.string("searchTerm");
 	}
 });
+
+const orderByItemName = enumType({
+  name: 'orderByItemName',
+  members: [
+    "discountPercent",
+    "amount",
+    "newPrice",
+    "createdAt",
+    "updatedAt"
+	]
+})
+
+const orderType = enumType({
+	name: 'orderType',
+	members: [
+		"asc",
+		"desc"
+	]
+})

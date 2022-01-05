@@ -10,7 +10,7 @@ export const OrderItem = objectType({
     t.id("orderId");
     t.string("itemName");
     t.string("image1");
-    t.string("image2");
+    t.nullable.string("image2");
     t.int("newPrice");
     t.string("description");
     t.int("quantity");

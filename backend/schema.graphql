@@ -52,6 +52,10 @@ input ItemWhereUniqueInput {
 input ItemsInput {
   category: category
   discountPercent_gt: Int
+  orderByItemName: orderByItemName
+  orderType: orderType
+  skip: Int
+  take: Int
 }
 
 input MoveItemToCartInput {
@@ -78,6 +82,7 @@ type Mutation {
 
 type Order {
   charge: String!
+  createdAt: String!
   id: ID!
   orderItems: [OrderItem!]!
   total: Int!
@@ -89,7 +94,7 @@ type OrderItem {
   description: String!
   id: ID!
   image1: String!
-  image2: String!
+  image2: String
   itemName: String!
   newPrice: Int!
   orderId: ID!
@@ -141,6 +146,7 @@ type User {
   email: String!
   id: ID!
   orders: [Order!]!
+  permissions: permissions!
   username: String!
   wishlistItems: [WishlistItem!]!
 }
@@ -167,4 +173,26 @@ enum category {
   SHIRT
   SHOE
   WRISTWATCH
+}
+
+enum orderByItemName {
+  amount
+  createdAt
+  discountPercent
+  newPrice
+  updatedAt
+}
+
+enum orderType {
+  asc
+  desc
+}
+
+enum permissions {
+  ADMIN
+  ITEMCREATE
+  ITEMDELETE
+  ITEMUPDATE
+  PERMISSIONUPDATE
+  USER
 }

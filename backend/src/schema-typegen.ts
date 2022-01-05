@@ -33,6 +33,10 @@ export interface NexusGenInputs {
   ItemsInput: { // input type
     category?: NexusGenEnums['category'] | null; // category
     discountPercent_gt?: number | null; // Int
+    orderByItemName?: NexusGenEnums['orderByItemName'] | null; // orderByItemName
+    orderType?: NexusGenEnums['orderType'] | null; // orderType
+    skip?: number | null; // Int
+    take?: number | null; // Int
   }
   MoveItemToCartInput: { // input type
     itemId: string; // ID!
@@ -70,6 +74,9 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   category: "BAG" | "DEVICE" | "SHIRT" | "SHOE" | "WRISTWATCH"
+  orderByItemName: "amount" | "createdAt" | "discountPercent" | "newPrice" | "updatedAt"
+  orderType: "asc" | "desc"
+  permissions: "ADMIN" | "ITEMCREATE" | "ITEMDELETE" | "ITEMUPDATE" | "PERMISSIONUPDATE" | "USER"
 }
 
 export interface NexusGenScalars {
@@ -105,6 +112,7 @@ export interface NexusGenObjects {
   Mutation: {};
   Order: { // root type
     charge: string; // String!
+    createdAt: string; // String!
     id: string; // ID!
     total: number; // Int!
     userId: string; // ID!
@@ -113,7 +121,7 @@ export interface NexusGenObjects {
     description: string; // String!
     id: string; // ID!
     image1: string; // String!
-    image2: string; // String!
+    image2?: string | null; // String
     itemName: string; // String!
     newPrice: number; // Int!
     orderId: string; // ID!
@@ -124,6 +132,7 @@ export interface NexusGenObjects {
   User: { // root type
     email: string; // String!
     id: string; // ID!
+    permissions: NexusGenEnums['permissions']; // permissions!
     username: string; // String!
   }
   WishlistItem: { // root type
@@ -187,6 +196,7 @@ export interface NexusGenFieldTypes {
   }
   Order: { // field return type
     charge: string; // String!
+    createdAt: string; // String!
     id: string; // ID!
     orderItems: NexusGenRootTypes['OrderItem'][]; // [OrderItem!]!
     total: number; // Int!
@@ -197,7 +207,7 @@ export interface NexusGenFieldTypes {
     description: string; // String!
     id: string; // ID!
     image1: string; // String!
-    image2: string; // String!
+    image2: string | null; // String
     itemName: string; // String!
     newPrice: number; // Int!
     orderId: string; // ID!
@@ -221,6 +231,7 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     id: string; // ID!
     orders: NexusGenRootTypes['Order'][]; // [Order!]!
+    permissions: NexusGenEnums['permissions']; // permissions!
     username: string; // String!
     wishlistItems: NexusGenRootTypes['WishlistItem'][]; // [WishlistItem!]!
   }
@@ -277,6 +288,7 @@ export interface NexusGenFieldTypeNames {
   }
   Order: { // field return type name
     charge: 'String'
+    createdAt: 'String'
     id: 'ID'
     orderItems: 'OrderItem'
     total: 'Int'
@@ -311,6 +323,7 @@ export interface NexusGenFieldTypeNames {
     email: 'String'
     id: 'ID'
     orders: 'Order'
+    permissions: 'permissions'
     username: 'String'
     wishlistItems: 'WishlistItem'
   }
