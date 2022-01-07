@@ -62,7 +62,7 @@ model OrderItem {
   id          String   @id @default(cuid())
   itemName    String
   image1      String
-  image2      String
+  image2      String?
   newPrice    Int
   description String
   quantity    Int

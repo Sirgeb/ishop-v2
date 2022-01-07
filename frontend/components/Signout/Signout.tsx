@@ -10,6 +10,7 @@ const Signout = () => {
     <button onClick={async () => {
       if (confirm("Click on OK to Sign out")) {
         await signout();
+        window.location.href = "/";
       }
     }} >
       <i className="fas fa-power-off icon"></i>

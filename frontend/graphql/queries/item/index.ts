@@ -39,3 +39,11 @@ export const ITEM_QUERY = gql`
     }
   }
 `;
+
+export const COUNT_ITEMS = gql`
+  query countItems($where: CountItemsInput) {
+    countItems(where: $where) {
+      itemsFound
+    }
+  }
+`;

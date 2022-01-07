@@ -24,7 +24,7 @@ const RemoveFromCart = ({ id }: { id: string }) => {
           await removeCartItem({
             variables: {
               input: {
-                itemId: id
+                cartItemId: id
               }
             },
             refetchQueries: [{ query: ME_QUERY }]

@@ -12,7 +12,7 @@ export const me = queryField("me", {
 		return ctx.prisma.user.findFirst({
       where: {
         id: ctx.user.id
-      }
+      },
     });
 	},
 });

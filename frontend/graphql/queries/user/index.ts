@@ -6,6 +6,7 @@ export const ME_QUERY = gql`
       id
       email
       username
+      permissions
       cartItems {
          id
          quantity

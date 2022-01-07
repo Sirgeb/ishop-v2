@@ -33,6 +33,7 @@ export const createRefreshCookie = (
 	const cookieOptions: CookieOptions = {
 		secure: isProd ? true : false,
 		httpOnly: true,
+		sameSite: 'none',
 		expires: addMilliseconds(Date.now(), ms(constants.JWT_REFRESH_EXPIRATION))
 	};
 

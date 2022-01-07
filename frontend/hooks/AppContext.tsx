@@ -8,7 +8,7 @@ export type IAppCtx = {
   }
 }
 
-const AppCtx = createContext<IAppCtx | null>(null);;
+const AppCtx = createContext<IAppCtx | null>(null);
 
 const AppContext = ({ children }: any) => {
   const { data, loading } = useMeQuery();

@@ -17,3 +17,11 @@ export const DECREASE_CARTITEM_QUANTITY = gql`
     }
   }
 `;
+
+export const REMOVE_CARTITEM = gql`
+  mutation removeCartItem($input: cartItemWhereUniqueInput!) {
+    removeCartItem(input: $input) {
+      id
+    }
+  }
+`;

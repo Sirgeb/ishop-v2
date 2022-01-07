@@ -11,7 +11,6 @@ import formatLetters from '../../lib/formatLetters';
 import RemoveFromCart from './RemoveFromCart';
 import IncreaseItem from './IncreaseItem';
 import DecreaseItem from './DecreaseItem';
-import { CartItem } from '../../generated';
 
 const Cart = () => {
   const userData = useUserData();

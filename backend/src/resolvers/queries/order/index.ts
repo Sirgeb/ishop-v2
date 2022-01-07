@@ -8,6 +8,10 @@ export const orders = queryField("orders", {
 		if (ctx.user === null) {
 			throw new Error('Sorry, You must be signed in')
 		}
-		return ctx.prisma.order.findMany({})
+		return ctx.prisma.order.findMany({
+			orderBy: {
+				createdAt: 'desc'
+			}
+		})
 	},
 });

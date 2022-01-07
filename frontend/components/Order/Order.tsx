@@ -13,6 +13,7 @@ import { useUserData } from '../../hooks/AppContext';
 const Order = () => {
   const userData = useUserData();
   const orders = userData && userData.data && userData.data.me && userData.data.me.orders;
+  console.log(orders)
 
   if (userData?.loading) return <Spinner spacing="200px" />
 
@@ -48,7 +49,7 @@ const Order = () => {
                 <div className="accordion-wrapper" key={order.id}>
                   <input id={order.id} name="myaccordion" type="checkbox" />
                   <label htmlFor={order.id}>
-                    <strong>•</strong> {moment(order.createdAt).add(24, 'hours').format('LLL')}
+                    <strong>•</strong> {moment(parseInt(order.createdAt)).add(24, 'hours').format('LLL')}
                   </label>
                   <div className="insidecontainer">
                     <p>

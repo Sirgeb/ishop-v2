@@ -1,8 +1,9 @@
 import { Category } from "@prisma/client";
 import { list, nonNull, nullable, queryField } from "nexus";
 import { Context } from "../../../context";
-import { ItemWhereUniqueInput, SearchTermInput, ItemsInput } from "../../inputs";
+import { ItemWhereUniqueInput, SearchTermInput, ItemsInput, CountItemsInput } from "../../inputs";
 import { Item } from "../../models";
+import { countItemsPayload } from "../../payload";
 
 export const item = queryField("item", {
 	type: nullable(Item),
@@ -17,6 +18,25 @@ export const item = queryField("item", {
     })
 	},
 });
+
+export const countItems = queryField("countItems", {
+	type: countItemsPayload,
+  args: {
+    where: nullable(CountItemsInput)
+  },
+	resolve: async (_root, args, ctx: Context) => {
+		const result = await ctx.prisma.item.count({
+			select: {
+				_all: true
+			},
+			where: {
+				category: args.where ? args.where.category : undefined
+			}
+		})
+		return {
+			itemsFound: result._all
+		}
+}});
 
 export const items = queryField("items", {
 	type: nonNull(list(nonNull(Item))),
@@ -87,6 +107,10 @@ export const searchItems = queryField("searchItems", {
 		input: nonNull(SearchTermInput)
 	},
 	resolve: async (_root, args, ctx: Context) => {
+		if (args.input.searchTerm.trim().length === 0) {
+			return [];
+		}
+		 
 		return ctx.prisma.item.findMany({
 			where: {
 			  OR: [

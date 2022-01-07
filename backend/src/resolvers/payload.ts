@@ -10,3 +10,10 @@ export const AuthPayload = objectType({
 		t.nonNull.string("accessToken");
 	},
 });
+
+export const countItemsPayload = objectType({
+	name: "countItemsPayload",
+	definition(t) {
+		t.nullable.int("itemsFound");
+	},
+});

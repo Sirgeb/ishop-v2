@@ -8,10 +8,17 @@ export const CreateItemInput = inputObjectType({
 		t.nonNull.int("discountPercent");
 		t.nonNull.field({ name: 'category', type: Category });
     t.nonNull.string("image1");
-    t.nonNull.string("image2");
+    t.nullable.string("image2");
     t.nonNull.int("amount");
     t.nonNull.int("newPrice");
     t.nonNull.string("description");
+	}
+});
+
+export const CountItemsInput = inputObjectType({
+	name: "CountItemsInput",
+	definition(t) {
+		t.nonNull.field({ name: 'category', type: Category });
 	}
 });
 
@@ -22,7 +29,7 @@ export const UpdateItemInput = inputObjectType({
 		t.int("discountPercent");
 		t.field({ name: 'category', type: Category });
     t.string("image1");
-    t.string("image2");
+    t.nullable.string("image2");
     t.int("amount");
     t.int("newPrice");
     t.string("description");

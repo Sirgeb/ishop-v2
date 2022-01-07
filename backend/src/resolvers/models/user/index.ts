@@ -10,7 +10,7 @@ export const User = objectType({
     t.id("id");
     t.string("username"); 
     t.string("email");
-    t.field({ name: 'permissions', type: Permissions });
+    t.list.field({ name: 'permissions', type: Permissions });
     t.nonNull.list.nonNull.field("cartItems", {
       type: CartItem,
       resolve: async (root, _args, ctx: Context) => {
@@ -37,6 +37,9 @@ export const User = objectType({
         return ctx.prisma.order.findMany({
           where: {
             userId: root.id
+          },
+          orderBy: {
+            createdAt: 'desc'
           }
         })
       }

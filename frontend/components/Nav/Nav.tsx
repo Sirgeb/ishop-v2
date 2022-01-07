@@ -34,13 +34,13 @@ const Nav = () => {
           <Link href="/cart">
             <a><i className="fas fa-shopping-cart icon counter"></i><span>
               <Counter
-                count={me ? cartItems && cartItems.reduce((tally, cartItem) => tally + cartItem.quantity, 0) : 0}
+                count={me ? cartItems && cartItems.reduce((tally: any, cartItem: any) => tally + cartItem.quantity, 0) : 0}
               />
             </span></a>
           </Link>
         </li>
         {
-          me && (
+          me ? (
             <>
               <li className="mb">
                 <Link href="/orders">
@@ -53,7 +53,7 @@ const Nav = () => {
                 </Link>
               </li>
             </>
-          )
+          ) : null
         }
         {
           !me && (
@@ -65,9 +65,9 @@ const Nav = () => {
           )
         }
         {
-          me && (
+          me ? (
             <li className="mb"><Signout /></li>
-          )
+          ) : null
         }
       </ul>
     </NavStyles>
