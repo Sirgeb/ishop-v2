@@ -9,10 +9,6 @@ import cookieParser from "cookie-parser";
 import { schema } from "./schema";
 import { createContext } from "./context";
 
-const IS_DEV = process.env.NODE_ENV === "development";
-const localOrigins = [/^http:\/\/localhost:\d{4}$/];
-const prodOrigins = [/^https:\/\/.*\.yourdomain\.com$/];
-
 async function startApolloServer() {
 	const app = express();
 	const httpServer = http.createServer(app);
@@ -31,7 +27,7 @@ async function startApolloServer() {
 	server.applyMiddleware({ 
 		app,
 		cors: {
-			origin: IS_DEV ? localOrigins : prodOrigins,
+			origin: process.env.FRONTEND_URL,
 			credentials: true,
 		},
 	});
