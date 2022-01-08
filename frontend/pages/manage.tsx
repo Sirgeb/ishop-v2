@@ -6,7 +6,7 @@ const Manage = ({ query }: IPage) => {
 
   return (
     <SigninAuth>
-      <ManageComponent page={parseFloat(query.page) || 1} />
+      <ManageComponent page={query.page || '1'} />
     </SigninAuth>
   )
 }

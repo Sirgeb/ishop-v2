@@ -84,23 +84,23 @@ const CollectionCardStyles = styled.div`
 
 	@media (max-width: 1000px) {
 		&:last-child {
-			display: ${(props) => (!props.hide ? 'flex' : 'none')};
+			display: ${(props: any) => (!props.hide ? 'flex' : 'none')};
 		}
 	}
 
 	@media (max-width: 900px) {
 		&:nth-child(4) {
-			display: ${(props) => (!props.hide ? 'flex' : 'none')};
+			display: ${(props: any) => (!props.hide ? 'flex' : 'none')};
 		}
 
 		&:last-child {
-			display: ${(props) => (!props.hide ? 'flex' : 'none')};
+			display: ${(props: any) => (!props.hide ? 'flex' : 'none')};
 		}
 	}
 
 	@media (max-width: 600px) {
 		&:nth-child(3) {
-			display: ${(props) => (!props.hide ? 'flex' : 'none')};
+			display: ${(props: any) => (!props.hide ? 'flex' : 'none')};
 		}
 	}
 `;

@@ -4,7 +4,7 @@ import { IPage } from './item';
 
 const update = (props: IPage) => (
   <SigninAuth>
-    <UpdateItem id={props.query.id} />
+    <UpdateItem id={props.query.id as string} />
   </SigninAuth>
 )
 
